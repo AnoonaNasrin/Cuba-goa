@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { Card, Col, Image } from "react-bootstrap";
+// import axios from "axios"
+import "./spaCard.css";
 
 const SpaCard = ({ card }) => {
-
+  console.log(card);
+  const navigate = useNavigate();
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <div className='cardWrapper' style={{ height: '16rem', width: '15rem', margin: '1rem', paddingBottom: '1.5rem', border: '1px solid lightgrey' }}>
-      <div><img src={card.imgUrl} alt='' style={{ width: '100%', height: '100%', marginTop: '0rem', paddingTop: '0rem' }} /></div>
-      <h5 style={{ height: '3rem', padding: '1rem' }}>{card.name}</h5>
+    <Col lg={4} md={6} sm={6} style={{ marginTop: "1rem"  }}>
+      <div 
+        className="image-box"
+        style={{ backgroundImage: `url(${card.imgUrl})` }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onClick={()=>{navigate("/spa-details/"+card._id)}}
+      >
+        {hovered && (
+          <div className="image-name">
+            <span>{card.name}</span>
+          </div>
+        )}
+      </div>
+    </Col>
+  );
+};
 
-    </div>
-  )
-}
-
-export default SpaCard
+export default SpaCard;
