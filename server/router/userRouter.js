@@ -166,4 +166,10 @@ router.delete("/contactus/:id", async (req, res) => {
   }
 });
 
+//Logout//
+router.post("logout" , (req,res)=>{
+  localStorage.removeItem("jwt")
+  res.status(200).json({message:"Logout successful"})
+})
+
 module.exports = router;

@@ -4,14 +4,24 @@ import "./BookingPage.css";
 import { IoManSharp } from "react-icons/io5";
 import { FaChild } from "react-icons/fa";
 import { CCard, CRow, CCol, CImage } from "@coreui/react";
-import { FaPlus, FaMinus } from "react-icons/fa";
 import axios from "axios";
+import BookingCard from "../BookingCard/BookingCard";
 const BookingPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [bookingData, setBookingData] = useState("");
   const [summaryData, setSummaryData] = useState([]);
   const [cart, setCart] = useState([]);
+
+  function onClickNormal(el) {
+    setSummaryData((val) => {
+      const obj = { ...el, item: 1 };
+      delete obj.perRoomPerWithBreakFast;
+      val.push(obj);
+      setNormalRoom(true);
+      return [...val];
+    });
+  }
 
   const addCart = async (id) => {
     try {
@@ -46,6 +56,8 @@ const BookingPage = () => {
     addCart(id);
     console.log(id);
   }, []);
+
+  console.log("hello ====================", summaryData);
 
   const incrementNormalItem = () => {
     setSummaryData((prevData) => {
@@ -165,6 +177,8 @@ const BookingPage = () => {
     }
   };
 
+  console.log(bookingData);
+
   return (
     <main className="BokingPage">
       {bookingData && (
@@ -198,178 +212,16 @@ const BookingPage = () => {
                     <div>
                       <h5>{el.title2} </h5>
                     </div>
-                    <div>
-                      <div style={{ display: "flex", gap: ".4rem" }}>
-                        <span>
-                          <p>Room Capacity</p>{" "}
-                        </span>
-                        <p className="adultp">
-                          {" "}
-                          <span className="adult">
-                            {" "}
-                            <IoManSharp />{" "}
-                          </span>
-                          {el.roomcapacity.max}
-                        </p>
-                        <p className="childp">
-                          <span className="child">
-                            {" "}
-                            <FaChild />{" "}
-                          </span>
-                          {el.roomcapacity.min}
-                        </p>
-                      </div>
 
-                      <div className="perRoom-book">
-                        <div>
-                          <p>Room Rates Exclusive of Tax</p>
-                          <div className="checkbox-container">
-                            {normalRoom ? (
-                              <div className="horizontal-counter">
-                                <button
-                                  className="counter-button"
-                                  onClick={decrementNormalItem}
-                                >
-                                  <FaMinus />
-                                </button>
-                                <div className="count-display">
-                                  {getCount(0).item}
-                                </div>
-                                <button
-                                  className="counter-button"
-                                  onClick={incrementNormalItem}
-                                >
-                                  <FaPlus />
-                                </button>
-                              </div>
-                            ) : (
-                              <button
-                                className="add-room"
-                                onClick={() =>
-                                  setSummaryData((val) => {
-                                    const obj = { ...el, item: 1 };
-                                    delete obj.perRoomPerWithBreakFast;
-                                    val.push(obj);
-                                    setNormalRoom(true);
-                                    return [...val];
-                                  })
-                                }
-                              >
-                                Add Room
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                        <div className="roomonly">
-                          <h6>ROOM ONLY Rs {el.perRoom}</h6>
-                          <p>Per Room Per Night</p>
-                        </div>
-                      </div>
-                      <div className="perRoom-book">
-                        <div>
-                          <p>Room Rates Exclusive of Tax</p>
-                          <div className="checkbox-container">
-                            {breakfastRoom ? (
-                              <div className="add-room-main">
-                                <div className="horizontal-counter">
-                                  <button
-                                    className="counter-button"
-                                    onClick={decrementBreakfastItem}
-                                  >
-                                    <FaMinus />
-                                  </button>
-                                  <div className="count-display">
-                                    {getCount(1).item}
-                                  </div>
-                                  <button
-                                    className="counter-button"
-                                    onClick={incrementBreakfastItem}
-                                  >
-                                    <FaPlus />
-                                  </button>
-                                </div>
-
-                                <div
-                                  className="room-drop"
-                                  style={{
-                                    margin: "2rem",
-                                    display: "flex",
-                                    gap: "0.2rem",
-                                  }}
-                                >
-                                  <span>Room1</span>
-                                  <div
-                                    style={{ display: "flex", gap: "0.3rem" }}
-                                  >
-                                    <label>Adult(12+yrs)</label>
-
-                                    <select
-                                      style={{
-                                        backgroundColor: "white",
-                                        color: "black",
-                                      }}
-                                      id="dropdown"
-                                      value=""
-                                    >
-                                      <option value="option1">1</option>
-                                      <option value="option2">2</option>
-                                      <option value="option3">3</option>
-                                    </select>
-                                    <label>Child(0/12yrs)</label>
-
-                                    <select
-                                      style={{
-                                        backgroundColor: "white",
-                                        color: "black",
-                                      }}
-                                      id="dropdown"
-                                      value=""
-                                    >
-                                      <option value="option1">1</option>
-                                      <option value="option2">2</option>
-                                      <option value="option3">3</option>
-                                    </select>
-                                    <label>child1</label>
-                                    <select
-                                      style={{
-                                        backgroundColor: "white",
-                                        color: "black",
-                                      }}
-                                      id="dropdown"
-                                      value=""
-                                    >
-                                      <option value="option1">1</option>
-                                      <option value="option2">2</option>
-                                      <option value="option3">3</option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            ) : (
-                              <button
-                                className="add-room"
-                                onClick={() =>
-                                  setSummaryData((val) => {
-                                    const obj = { ...el, item: 1 };
-                                    delete obj.perRoom;
-                                    val.push(obj);
-                                    setBreakfastRoom(true);
-                                    return [...val];
-                                  })
-                                }
-                              >
-                                Add Room
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                        <div className="roomonly">
-                          <h6>
-                            ROOM & BREAKFAST Rs {el.perRoomPerWithBreakFast}
-                          </h6>
-                          <p>Per Room Per Night</p>
-                        </div>
-                      </div>
+                    <div className="perRoom-book">
+                      <BookingCard
+                        counter={getCount(0) ? getCount(0).item : 0}
+                        increment={incrementNormalItem}
+                        decrement={decrementNormalItem}
+                        onClick={onClickNormal}
+                        room={el}
+                        bookingData={bookingData}
+                      />
                     </div>
                   </div>
                 </div>
@@ -387,7 +239,6 @@ const BookingPage = () => {
                     <CRow>
                       <p>Check In 12/3/2024</p>
                       <p>Check Out 13/3/2024</p>
-
                       <CCol className="p-2">
                         <p>{el.title2}</p>
                         <h6>

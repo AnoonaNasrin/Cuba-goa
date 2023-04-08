@@ -1,11 +1,11 @@
-.card-form{
-    height: 100vh;
-    width: 100vw;
-    padding: 2rem;
+.card-form {
+  height: 100vh;
+  width: 100vw;
+  padding: 2rem;
 }
-.form-book{
-    height:50vh;
-    width: 50vw;
+.form-book {
+  height: 50vh;
+  width: 50vw;
 }
 
 .BokingPage {
@@ -76,13 +76,6 @@
   margin-bottom: 20px;
   padding: 1.5rem;
 }
-.card-content div:nth-child(1) h5 {
-  font-size: 17px;
-}
-.card-content div:nth-child(2) div {
-  display: flex;
-  align-items: flex-end;
-}
 
 .card-content {
   padding: 10px;
@@ -113,9 +106,6 @@
 }
 
 .perRoom-book {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
   background-color: rgba(236, 233, 233, 0.552);
   border: 1px solid rgba(128, 128, 128, 0.431);
   margin-top: 2px;
@@ -125,12 +115,7 @@
   display: flex;
   flex-direction: column;
 }
-.perRoom-book div:nth-child(1) {
-  height: inherit;
-  align-self: flex-start;
-  display: flex;
-  flex-direction: column;
-}
+
 .type-of-room {
   background-color: rgba(236, 233, 233, 0.552);
   border: 1px solid rgba(128, 128, 128, 0.431);
@@ -140,15 +125,6 @@
   background-color: orange;
   border: none;
   margin-top: 20px;
-}
-
-.perRoom-book div:nth-child(1) .checkbox-container {
-  width: 100%;
-}
-.perRoom-book div:nth-child(1) .checkbox-container input {
-  width: 30px;
-  height: 30px;
-  color: aqua !important;
 }
 
 .booking {
@@ -215,6 +191,5 @@
 .count-display {
   font-size: 16px;
   font-weight: bold;
-  color:#333;
+  color: #333;
 }
-

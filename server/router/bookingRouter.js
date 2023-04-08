@@ -152,20 +152,28 @@ router.post(" /cartModel-decrement", async (req, res) => {
   }
 });
 
-const createOrder = async () => {
-  await instance.orders.create({
-    amount: total,
-    currency: "INR",
-    payment_capture: 1,
-    notes: {
-      booking_id: "YOUR_BOOKING_ID",
-    },
-  });
-};
+// const createOrder = async () => {
+//   await instance.orders.create({
+//     amount: total,
+//     currency: "INR",
+//     payment_capture: 1,
+//     notes: {
+//       booking_id: "YOUR_BOOKING_ID",
+//     },
+//   });
+// };
 
 router.post("/payment", async (req, res) => {
   const payment_request = req.body;
   try {
+    const order = await instance.orders.create({
+      amount: total,
+      currency: "INR",
+      payment_capture: 1,
+      notes: {
+        booking_id: "YOUR_BOOKING_ID",
+      },
+    });
     const payment = await instance.payments.create(payment_request);
     res
       .status(200)
