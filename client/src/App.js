@@ -6,7 +6,7 @@ import Footer from "./components/Root-Component/Footer/Footer";
 import PostSpaData from "./components/Root-Component/postSpaData/PostSpaData";
 import SpaDetailes from "./components/Root-Component/postSpaData/detailedSpa";
 import Booking from "./components/Root-Component/BookingPage/BookingPage";
-
+import BookingForm from "./components/Root-Component/BookingForm/BookingFrom";
 
 const Header = React.lazy(() => import("./components/Header/Header"));
 const Home = React.lazy(() => import("./components/Root-Component/Home/Home"));
@@ -152,7 +152,8 @@ function App() {
 
           <Route path="/addSpa" element={<PostSpaData />} />
           <Route path="/spa-details/:id" element={<SpaDetailes />} />
-          <Route path="/booking-room" element={<Booking/>}/>
+          <Route path="/booking-room" element={<Booking />} />
+          <Route path="/booking-form" element={<BookingForm />} />
         </Routes>
       </BrowserRouter>
     </div>

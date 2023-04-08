@@ -1,8 +1,56 @@
 const express = require("express");
-const router= express.Router()
+const router = express.Router();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const User = require("../models/user");
 const Contactus = require("../models/contactus");
 
+// Register
+router.post("/register", async (req, res) => {
+  try {
+    const { username, password, email } = req.body;
+    const existingEmail = await User.find({ email: email });
+    if (existingEmail)
+      return res.status(409).json({ message: "User already exists" });
+    const hash = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      email: email,
+      password: hash,
+      name: username,
+    });
+
+    res.status(200).json({ status: true, message: "succefully registerd" });
+  } catch (er) {
+    res.status(400).json({ status: false, message: er.message });
+  }
+});
+// Login //
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.find({ email: email });
+    if (!user)
+      return res
+        .status(400)
+        .json({ status: false, message: "Email not found" });
+    const passwordCheck = await bcrypt.compare(password, user.password);
+    if (!passwordCheck)
+      return res
+        .status(400)
+        .json({ status: false, message: "Invalid password" });
+    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
+      expiresIn: "24h",
+    });
+    res
+      .status(200)
+      .json({ status: true, message: "succes login", token: token });
+  } catch (er) {
+    res.status(400).json({ status: false, message: er.message });
+  }
+});
+//
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -119,4 +167,3 @@ router.delete("/contactus/:id", async (req, res) => {
 });
 
 module.exports = router;
-
