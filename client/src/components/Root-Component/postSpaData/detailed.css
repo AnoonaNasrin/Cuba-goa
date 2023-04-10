@@ -1,7 +1,7 @@
 .detailed-spa-container {
   display: flex;
   flex-direction: column;
- 
+
   height: 100%;
 }
 
@@ -54,7 +54,7 @@
   margin-bottom: 0.5rem;
 }
 
-button {
+button > {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   background-color: #ffcc03;
@@ -65,7 +65,7 @@ button {
   transition: background-color 0.2s ease;
 }
 
-button:hover {
+button:hover  > {
   background-color: #ffc400;
 }
 

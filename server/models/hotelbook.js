@@ -36,7 +36,7 @@ const hotelbookSchema = mongoose.Schema({
       adults: {
         type: String,
       },
-      chlidren: {
+      children: {
         type: String,
       },
       room: {

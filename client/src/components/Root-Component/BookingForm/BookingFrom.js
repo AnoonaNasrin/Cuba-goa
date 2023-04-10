@@ -343,7 +343,7 @@ function BookingSection() {
                 </ListGroup.Item>
               </ListGroup>
               <hr />
-              <Form>
+              {/* <Form>
                 <Form.Group className="mb-3" controlId="promo-code">
                   <Form.Label>Promotional Code</Form.Label>
                   <Row>
@@ -361,7 +361,7 @@ function BookingSection() {
                     </Col>
                   </Row>
                 </Form.Group>
-              </Form>
+              </Form> */}
             </Card.Body>
           </Card>
         </div>

@@ -13,15 +13,51 @@
   background-color: white;
   margin-bottom: 40px;
 }
-.booking-banner {
-  background-size: cover;
-  height: 300px;
-  font-family: "Satisfy", cursive;
+.booking-logo-div img {
+  height: 15vh;
+  width: 10vw;
+}
+.booking-head {
   display: flex;
-  justify-content: center;
-  padding-top: 100px;
+  flex-direction: column;
+  padding: 2rem 4rem;
+}
+.booking-banner {
+  padding: 4rem 3rem;
+  display: flex;
+  gap:4rem;
+  background-size: cover;
+  height: 40vh;
   background-image: url("../../../assets/pexels-asad-photo-maldives-1450353.jpg");
 }
+.date-check-b {
+  display: flex;
+  gap: 1rem;
+  background-color: #333;
+  text-align: center;
+  color: #e8e8e8;
+}
+.date-checkIn {
+  font-weight: 700;
+  font-style: oblique;
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+.date-checkout {
+  font-weight: 700;
+  font-style: oblique;
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+.check-av {
+  background-color: black;
+  height:2rem;
+  margin: 1rem;
+  padding: 0.2rem;
+}
+
 .booking-banner h2 {
   font-size: 60px;
   font-weight: bolder;
@@ -34,9 +70,17 @@
   text-align: center;
 }
 
+.filter-compare{
+  padding: 0 10rem;
+}
+
+.comp{
+  background-color: #e8e8e8 !important;
+}
 .booking-card-withS {
   display: flex;
-  padding: 20px 80px;
+  padding: 0 10rem;
+  justify-content: center;
 }
 
 .booking-card {
@@ -191,5 +235,5 @@
 .count-display {
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: #333;
 }

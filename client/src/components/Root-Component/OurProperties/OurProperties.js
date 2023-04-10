@@ -83,7 +83,7 @@ const OurProperties = () => {
         <PropertiesForm getOprPropertiesData={getPropertiesData} />
 
         <div className="about-hotel">
-          {ourPropertiesData
+          {ourPropertiesData 
             .filter((el) => el.title === selectedValue[0])
             .map((el) => (
               <>

@@ -9,12 +9,11 @@ import "./BookingCard.css";
 
 export default function BookingCard(props) {
   const [showCounter, setShowCounter] = useState(false);
+
   const toggleCounter = () => {
     setShowCounter(true);
     props.onClick(props.room);
   };
-
-  console.log(props.room);
 
   useEffect(() => {
     if (props.counter == 0) {
@@ -22,10 +21,25 @@ export default function BookingCard(props) {
     }
   });
 
+  const onIncrement = () => {
+    props.increment(props.room);
+  };
+
+  const onDecrement = () => {
+    props.decrement(props.room);
+  };
+
+  const onChange = (e) => {
+    props.onChange(props.room, e.target.checked);
+  };
+
   return (
     <Card>
       <div className="resort-name">
-        <h2>{props.bookingData.title}</h2>
+        <h2>
+          {props.bookingData.title}{" "}
+          {props.breakfastRoom && "(Room & Breakfast)"}
+        </h2>
       </div>
       <div className="room-details">
         <div className="left-content">
@@ -55,7 +69,7 @@ export default function BookingCard(props) {
           <h6>Per Room Per Night</h6>
           <h6>2 Adults, 1 Child, 1 Room</h6>
           <div className="compare">
-            <input id="compare-box" type="checkbox" />
+            <input id="compare-box" type="checkbox" onChange={onChange} />
             <label>Add to compare</label>
           </div>
         </div>
@@ -66,11 +80,11 @@ export default function BookingCard(props) {
         </div>
         {showCounter ? (
           <div className="horizontal-counter">
-            <button className="counter-button" onClick={props.decrement}>
+            <button className="counter-button" onClick={onDecrement}>
               <FaMinus />
             </button>
             <div className="count-display">{props.counter}</div>
-            <button className="counter-button" onClick={props.increment}>
+            <button className="counter-button" onClick={onIncrement}>
               <FaPlus />
             </button>
           </div>
@@ -81,38 +95,40 @@ export default function BookingCard(props) {
           </div>
         )}
       </div>
-      <div className="room-pax">
-        <h6>Room 1</h6>
-        <div className="pax-adult pax">
-          <div className="pax-type">
-            <span>Adult</span>
-            <span className="pax-age">(12+ years)</span>
+      {showCounter && (
+        <div className="room-pax">
+          <h6>Room 1</h6>
+          <div className="pax-adult pax">
+            <div className="pax-type">
+              <span>Adult</span>
+              <span className="pax-age">(12+ years)</span>
+            </div>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
           </div>
-          <select>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
-        <div className="pax-child pax">
-          <div className="pax-type">
-            <span>Child</span>
-            <span className="pax-age">(0-12yrs)</span>
+          <div className="pax-child pax">
+            <div className="pax-type">
+              <span>Child</span>
+              <span className="pax-age">(0-12yrs)</span>
+            </div>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
           </div>
-          <select>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
-        <div className="pax">
-          <div className="pax-type">
-            <span>Child 1</span>
+          <div className="pax">
+            <div className="pax-type">
+              <span>Child 1</span>
+            </div>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
           </div>
-          <select>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
         </div>
-      </div>
+      )}
     </Card>
   );
 }
