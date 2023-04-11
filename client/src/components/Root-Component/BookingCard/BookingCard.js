@@ -9,6 +9,9 @@ import "./BookingCard.css";
 
 export default function BookingCard(props) {
   const [showCounter, setShowCounter] = useState(false);
+ 
+
+
 
   const toggleCounter = () => {
     setShowCounter(true);
@@ -90,7 +93,7 @@ export default function BookingCard(props) {
           </div>
         ) : (
           <div className="action">
-            <span>4 rooms left</span>
+            <span>{props.room.leftroom} Left Room</span>
             <button onClick={toggleCounter}>Add Room</button>
           </div>
         )}

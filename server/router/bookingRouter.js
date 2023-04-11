@@ -33,7 +33,7 @@ router.get("/hotelbook", async (req, res) => {
 });
 
 //to  get   hotel Book by id
-router.get("/hotelBook/:id", async (req, res) => {
+router.get("/hotelbook/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const hotelBook = await HotelBook.findById(id);

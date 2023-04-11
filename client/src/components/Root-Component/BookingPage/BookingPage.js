@@ -18,6 +18,48 @@ const BookingPage = () => {
   const [cart, setCart] = useState([]);
   const [compareList, setOnCompareList] = useState([]);
   const [showCompareModal, setShowCompareModal] = useState(false);
+  const [normalRoom, setNormalRoom] = useState(false);
+  const [breakfastRoom, setBreakfastRoom] = useState(false);
+  const [del, setDel] = useState(false);
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
+  const [availability, setAvailability] = useState([]);
+
+  useEffect(() => {
+    // Fetch availability data from backend for desired period
+    const fetchAvailability = async () => {
+      const response = await fetch(
+        `/availability?checkIn=${checkInDate}&checkOut=${checkOutDate}`
+      );
+      const data = await response.json();
+      setAvailability(data);
+    };
+    fetchAvailability();
+  }, [checkInDate, checkOutDate]);
+
+  const handleCheckInDateChange = (event) => {
+    setCheckInDate(event.target.value);
+  };
+
+  const handleCheckOutDateChange = (event) => {
+    setCheckOutDate(event.target.value);
+  };
+
+  const getAvailableDates = () => {
+    const startDate = new Date(checkInDate);
+    const endDate = new Date(checkOutDate);
+    const nights = (endDate - startDate) / (1000 * 60 * 60 * 24);
+    const availableDates = [];
+
+    for (let i = 0; i < nights; i++) {
+      const date = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
+      if (availability.includes(date)) {
+        availableDates.push(date);
+      }
+    }
+
+    return availableDates;
+  };
 
   function onClickNormal(el) {
     setSummaryData((val) => {
@@ -69,17 +111,28 @@ const BookingPage = () => {
     const data = await response.json();
     setBookingData(data);
   };
-
-  const [normalRoom, setNormalRoom] = useState(false);
-
-  const [breakfastRoom, setBreakfastRoom] = useState(false);
-  const [del, setDel] = useState(false);
+  console.log(bookingData, "bookingdata");
 
   useEffect(() => {
     getHotelData();
     addCart(id);
     console.log(id);
   }, []);
+
+  const handleRemove = (data, perRoom) => {
+    console.log(perRoom, "sdxrfctvgbhn");
+    if (perRoom) {
+      setSummaryData(
+        summaryData.filter((item) => item._id != data._id && item.perRoom)
+      );
+    } else {
+      setSummaryData(
+        summaryData.filter(
+          (item) => item._id != data._id && item.perRoomPerWithBreakFast
+        )
+      );
+    }
+  };
 
   const incrementNormalItem = (room) => {
     setSummaryData((prevData) => {
@@ -223,19 +276,19 @@ const BookingPage = () => {
               <img src={logo} alt="" />
             </div>
             <div className="booking-head">
-            <h2>Enjoy Your Dream Vacation</h2>
-            <div className="date-check-b">
-              <div className="date-checkIn">
-                <label>Check In</label>
-                <input type="date" />
+              <h2>Enjoy Your Dream Vacation</h2>
+              <div className="date-check-b">
+                <div className="date-checkIn">
+                  <label>Check In</label>
+                  <input type="date" />
+                </div>
+                <div className="date-checkout">
+                  <label>Check Out</label>
+                  <input type="date" />
+                </div>
+                <button className=" check-av">Availability</button>
               </div>
-              <div className="date-checkout">
-                <label>Check Out</label>
-                <input type="date" />
-              </div>
-              <button className=" check-av">Availability</button>
             </div>
-          </div>
           </div>
 
           <div>
@@ -243,7 +296,8 @@ const BookingPage = () => {
           </div>
 
           <div className="filter-compare">
-            <Button className="comp"
+            <Button
+              className="comp"
               onClick={() => {
                 if (compareList.length > 1) {
                   setShowCompareModal(true);
@@ -318,7 +372,10 @@ const BookingPage = () => {
 
               <div className="summary px-4 py-2 ">
                 {summaryData[0] && (
-                  <SummaryCard summaryData={summaryData} />
+                  <SummaryCard
+                    summaryData={summaryData}
+                    handleRemove={handleRemove}
+                  />
                   // <CCard className="my-2 p-4 bg-dark text-white">
                   //   <h6>
                   //     Total Rs{" "}

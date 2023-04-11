@@ -1,18 +1,14 @@
 import { FaRegWindowClose } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import React from "react";
-import { useNavigate } from "react-router";
-import { Card } from "react-bootstrap";
 
 import "./SummaryCard.css";
+import { Card } from "react-bootstrap";
+import { CCard } from "@coreui/react";
 
 export default function SummaryCard(props) {
   const navigate = useNavigate();
   console.log(props.summaryData);
-
-  const total = props.summaryData.reduce(
-    (acc, curr) => acc + curr.pernightroom,
-    0
-  );
 
   return (
     <Card className="summary-car" style={{ width: "100%" }}>
@@ -29,33 +25,47 @@ export default function SummaryCard(props) {
           <div className="summary-flex summary-title">
             <h6>{data.title2}</h6>
             <span>
-              <FaRegWindowClose className="summary-delete" />
+              <FaRegWindowClose
+                className="summary-delete"
+                onClick={() => {
+                  props.handleRemove(data, data.perRoom);
+                }}
+              />
             </span>
           </div>
           <div className="summary-pax summary-flex">
-            <h6>{data.adults} Adults</h6>
-            <h6>{data.room} Room</h6>
+            <h6>{data.adults} Adults, 1 Child, 1 Room</h6>
           </div>
           <div className="summary-flex summary-after summary-price">
             <div></div>
-            <div>Rs{data.perRoom}</div>
+            <div>
+              {data.item + "X" + "  "}Rs
+              {data.perRoom ? data.perRoom : data.perRoomPerWithBreakFast}
+            </div>
           </div>
         </div>
       ))}
-      <div className="summary-flex summary-total">
-        <h6>Total</h6>
-        <h6>Rs{total}</h6>
-      </div>
-      <div style={{ width: "100%" }}>
-        <buton
+      <CCard className="my-2 p-4 bg-dark text-white">
+        <h6>
+          Total Rs{" "}
+          {props.summaryData.reduce((crr, el, i) => {
+            if (el.perRoomPerWithBreakFast) {
+              crr += el.perRoomPerWithBreakFast * el.item;
+            }
+            if (el.perRoom) {
+              crr += +el.perRoom * el.item;
+            }
+            return crr;
+          }, 0)}
+        </h6>
+        <button
           onClick={() => {
             navigate("/booking-form");
           }}
-          className="summary-button"
         >
-          Book
-        </buton>
-      </div>
+          Book Now
+        </button>
+      </CCard>
     </Card>
   );
 }
